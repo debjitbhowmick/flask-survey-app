@@ -26,5 +26,15 @@ def submit():
 def thankyou():
     return "<h2>Thank you for your response!</h2>"
 
+@app.route('/responses')
+def view_responses():
+    responses = []
+    with open('responses.csv', newline='') as f:
+        reader = csv.reader(f)
+        headers = next(reader)  # skip header
+        for row in reader:
+            responses.append(row)
+    return render_template('responses.html', responses=responses, headers=headers)
+
 if __name__ == '__main__':
     app.run(debug=True)
